@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# QuestPad: never commit real family data or local uploads
+/uploads
+/local-data
+*.env.local
+
+# Next.js's default .gitignore above excludes all .env* files —
+# un-ignore the example template so contributors get it when they clone
+!.env.example

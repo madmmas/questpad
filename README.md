@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuestPad
 
-## Getting Started
+A single-family learning tracker. A parent uploads scanned book pages as
+"quests." A child picks one, works it out on a scratchpad (Apple Pencil
+supported), submits it, and gets feedback from a parent and/or an AI
+reviewer. Progress shows on a gamified, LeetCode-style dashboard: XP,
+levels, streaks, badges, and a submission heatmap.
 
-First, run the development server:
+This is an MVP built for one family, open-sourced under the MIT license.
+Not a SaaS product (yet) — see `docs/PRD.md` for scope and roadmap.
+
+## Tech stack
+
+- Next.js (App Router) + TypeScript
+- Postgres via Neon + Drizzle ORM
+- Vercel Blob for image storage
+- Custom canvas scratchpad built on `perfect-freehand` (MIT, no
+  commercial license required)
+- Auth.js (NextAuth) with PIN-based profiles
+- Claude API for optional AI review of submissions
+- Telegram Bot API for parent notifications
+- Tailwind CSS + shadcn/ui
+- Vitest (unit) + Playwright (e2e)
+
+Full rationale for each choice is in `docs/PRD.md`.
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in real secrets — never commit this file
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/                # Next.js routes (App Router)
+  components/
+    dashboard/         # XP ring, streak, badges, heatmap, activity feed
+    quest-board/        # browse/pick a quest (problem)
+    scratchpad/          # drawing canvas (perfect-freehand)
+  lib/
+    db/                # Drizzle schema + client
+    ai/                 # Claude API review integration
+    telegram/            # notification helper
+drizzle/               # generated SQL migrations
+docs/                  # PRD and project instructions
+tests/
+  unit/                # Vitest
+  e2e/                  # Playwright
+```
 
-## Learn More
+## Testing
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run test        # unit tests (Vitest)
+npm run test:e2e     # end-to-end tests (Playwright)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Docs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `docs/PRD.md` — product requirements, data model, tech stack rationale
+- `CLAUDE.md` — repo-level instructions for Claude Code
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See `CONTRIBUTING.md`. This is a young, personal project — issues and
+small PRs are welcome, response times may be slow.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT — see `LICENSE`.
