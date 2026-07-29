@@ -13,9 +13,12 @@ cp .env.example .env.local
 npm run dev
 ```
 
+Use Node.js 20+ (matches CI). `npm install` also installs a Husky
+pre-commit hook that runs lint-staged (ESLint + Prettier on staged files).
+
 ## Before opening a PR
 
-- `npm run lint` passes
+- `npm run lint` passes (ESLint + Prettier check)
 - `npm run test` passes (unit)
 - `npm run test:e2e` passes locally if you touched a user-facing flow
 - No real personal data, images, or secrets in the diff — use the mock
@@ -27,11 +30,12 @@ npm run dev
 ## Commit style
 
 Plain, descriptive messages (`fix: ...`, `feat: ...`, `docs: ...`) are
-fine — no strict convention enforced yet.
+fine — no strict convention enforced yet. Pre-commit will reject commits
+that leave ESLint errors or Prettier formatting issues in staged files.
 
 ## Code style
 
 TypeScript, Tailwind CSS, Prettier + ESLint (run automatically via
-`npm run lint`). No commercial/proprietary-licensed dependencies —
-everything in this repo should be usable by a clone with zero paid
-accounts beyond the hosting/API services listed in `.env.example`.
+`npm run lint` and on commit via Husky). No commercial/proprietary-licensed
+dependencies — everything in this repo should be usable by a clone with
+zero paid accounts beyond the hosting/API services listed in `.env.example`.

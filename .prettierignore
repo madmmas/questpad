@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+build
+coverage
+drizzle
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+public/mock-data
+uploads
+local-data

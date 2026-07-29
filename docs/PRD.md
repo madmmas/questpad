@@ -15,6 +15,7 @@ This project will be open-source.
 ## 2. Personas
 
 **Parent (admin)**
+
 - Scans/uploads book page images.
 - Tags each page with metadata (subject, difficulty, book/source).
 - Reviews child's submissions; marks verified / needs revision / notes.
@@ -22,35 +23,41 @@ This project will be open-source.
 - Views the dashboard to see progress trends.
 
 **Child**
+
 - Browses available "problems" (uploaded pages), grouped by book or difficulty.
 - Picks one, opens a scratchpad to do the work.
 - Submits work (photo/scan of scratchpad or native drawing data, TBD).
 - Sees their own dashboard: streak, badges, solved count by difficulty.
 
 **AI reviewer (system actor)**
+
 - Given a submission + the source problem image, produces a pass/fail or scored assessment and notifies the parent.
 - [DECIDE] Does AI review replace parent review, gate it, or run in parallel?
 
 ## 3. Core user flows
 
 **Upload flow (parent)**
+
 1. Parent scans/photographs book page(s).
 2. Uploads to app; assigns metadata (title, difficulty, tags).
 3. Page appears in child's problem list.
 
 **Work flow (child)**
+
 1. Child opens app, sees list/grid of available problems (unattempted, in-progress, solved).
 2. Picks one → opens scratchpad view.
 3. Works with Apple Pencil; work auto-saves as draft.
 4. Submits when done.
 
 **Review flow (parent / AI)**
+
 1. Submission appears in a review queue.
 2. Parent opens it, compares against source page, marks verified/rejected, optionally leaves a note.
 3. Parent can instead (or also) trigger "AI Review" → AI returns a verdict + notification.
 4. Verified submissions update the child's stats (solved count, streak, badges).
 
 **Dashboard flow (both)**
+
 - Solved/total ring by difficulty (easy/medium/hard, or whatever taxonomy fits book content).
 - Streak + max streak, active days.
 - Badges for milestones (e.g., "100 days," matching the reference screenshot).
@@ -107,6 +114,7 @@ This project will be open-source.
 ## 9. Testing
 
 A second person handles manual/automation testing (doesn't write app code). Once the stack is chosen, define:
+
 - Critical flows to smoke-test each release (upload → assign → submit → verify → dashboard updates).
 - Whether to add automated e2e tests (Playwright/Cypress), or manual test scripts to start.
 
