@@ -54,5 +54,22 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"
-  }
+  },
+  "description": "A single-family, gamified learning tracker (LeetCode-style dashboard, quest/XP theme). MIT-licensed MVP, not a SaaS product.",
+  "license": "MIT",
+  "homepage": "https://github.com/madmmas/questpad#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madmmas/questpad.git"
+  },
+  "bugs": {
+    "url": "https://github.com/madmmas/questpad/issues"
+  },
+  "keywords": [
+    "nextjs",
+    "education",
+    "kids",
+    "gamification",
+    "open-source"
+  ]
 }
