@@ -5,9 +5,17 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    # Keep majors manual for now — Dependabot grouped majors broke
+    # eslint-config-next (TS 7 / ESLint 10) and regenerates lockfiles
+    # that Node 20's npm ci rejects.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       dev-dependencies:
         dependency-type: "development"
+      production-dependencies:
+        dependency-type: "production"
 
   - package-ecosystem: "github-actions"
     directory: "/"
