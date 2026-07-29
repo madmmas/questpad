@@ -1,5 +1,7 @@
 # QuestPad
 
+[![CI](https://github.com/madmmas/questpad/actions/workflows/ci.yml/badge.svg)](https://github.com/madmmas/questpad/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A single-family learning tracker. A parent uploads scanned book pages as
 "quests." A child picks one, works it out on a scratchpad (Apple Pencil
 supported), submits it, and gets feedback from a parent and/or an AI
