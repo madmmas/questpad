@@ -4,6 +4,7 @@ import { listBooks, listProblems } from "@/lib/problems/repository";
 import { listSubmissions } from "@/lib/submissions/repository";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export default async function BoardPage() {
   const [books, problems, submissions] = await Promise.all([
