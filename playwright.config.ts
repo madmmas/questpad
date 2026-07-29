@@ -3,11 +3,11 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "tests/e2e",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3100",
   },
   webServer: {
-    command: process.env.CI ? "npm run start" : "npm run dev",
-    url: "http://localhost:3000",
+    command: process.env.CI ? "next start -p 3100" : "next dev -p 3100",
+    url: "http://localhost:3100",
     reuseExistingServer: !process.env.CI,
   },
 });

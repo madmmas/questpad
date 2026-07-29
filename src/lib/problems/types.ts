@@ -2,6 +2,10 @@ export const DIFFICULTIES = ["bronze", "silver", "gold"] as const;
 
 export type Difficulty = (typeof DIFFICULTIES)[number];
 
+export const QUEST_STATUSES = ["unattempted", "in-progress", "solved"] as const;
+
+export type QuestStatus = (typeof QUEST_STATUSES)[number];
+
 export type ProblemTagInput = {
   bookTitle: string;
   subject: string;
