@@ -38,6 +38,30 @@ export async function findOrCreateBook(input: {
   };
 }
 
+export async function listBooks(): Promise<BookRecord[]> {
+  const db = getDb();
+  const rows = await db.select().from(books);
+
+  return rows.map((row) => ({
+    id: row.id,
+    title: row.title,
+    subject: row.subject,
+  }));
+}
+
+export async function listProblems(): Promise<ProblemRecord[]> {
+  const db = getDb();
+  const rows = await db.select().from(problems);
+
+  return rows.map((row) => ({
+    id: row.id,
+    bookId: row.bookId,
+    imageUrl: row.imageUrl,
+    difficulty: row.difficulty as Difficulty,
+    tags: row.tags,
+  }));
+}
+
 export async function insertProblem(input: {
   bookId: string;
   imageUrl: string;
