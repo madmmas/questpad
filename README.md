@@ -64,6 +64,7 @@ npm run test:e2e     # end-to-end tests (Playwright)
 ## Docs
 
 - `docs/PRD.md` — product requirements, data model, tech stack rationale
+- `DEVLOG.md` — GitHub issue progress tracker
 - `CLAUDE.md` — repo-level instructions for Claude Code
 
 ## Contributing
