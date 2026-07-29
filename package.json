@@ -36,7 +36,7 @@
     "next-auth": "^4.24.15",
     "perfect-freehand": "^1.2.3",
     "react": "19.2.8",
-    "react-dom": "19.2.4",
+    "react-dom": "19.2.8",
     "zod": "^4.4.3"
   },
   "devDependencies": {
