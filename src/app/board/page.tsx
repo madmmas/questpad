@@ -16,13 +16,13 @@ export default async function BoardPage() {
   const groups = buildQuestBoard(books, problems, submissions);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-6 py-12">
+    <main className="flex flex-1 flex-col gap-8 py-2">
       <header className="flex flex-col gap-2">
-        <p className="text-sm font-medium uppercase tracking-wide text-zinc-500">
-          Quest board
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight">Pick a quest</h1>
-        <p className="max-w-2xl text-zinc-600 dark:text-zinc-400">
+        <p className="eyebrow">Quest board</p>
+        <h1 className="font-display text-3xl font-extrabold tracking-tight">
+          Pick a quest
+        </h1>
+        <p className="max-w-2xl text-fg-dim">
           Browse quests by book. Bronze, silver, and gold show how tricky each
           one is.
         </p>

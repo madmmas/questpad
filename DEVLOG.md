@@ -6,34 +6,20 @@ issue.
 
 ## Active
 
-### #22 — Local Docker Compose stack (Postgres + Next.js API routes)
+### #25 — Apply QuestPad mockup theme
 
-- **Status:** in progress (PR)
-- **Branch:** `feat/issue-22-docker-compose-local-stack`
-- **Notes:** Compose runs Postgres 16 + Next.js (`make up`). Neon
-  SQL-over-HTTP cannot talk to stock Postgres, so `getDb()` now supports a
-  TCP `postgres` driver (auto for localhost/`db`, or `DATABASE_DRIVER`).
-  App Router `src/app/api/**` handlers are the Vercel Functions — no
-  separate Functions container. Schema bootstrap: `docker/db/init.sql`.
+- **Status:** in progress
+- **Branch:** `feat/issue-25-mockup-theme`
+- **Notes:** Port tokens/fonts/shell from `mock-ui/questpad-mockup.html`
+  into the Next app (dark navy canvas, Baloo 2 + Inter, green primary,
+  bronze/silver/gold accents, header + Progress/Quest board/Review/Add
+  quests tabs).
 
-### #6 — Dashboard: XP, streak, heatmap, badges
+### #24 — Replace create-next-app starter on /
 
-- **Status:** done (merged)
-- **Branch:** `feat/issue-6-dashboard`
-- **Notes:** `/dashboard` renders solved/total by difficulty tier (ring +
-  bronze/silver/gold breakdown), current/max streak, active days, a
-  182-day activity heatmap, milestone badges, and a recent-activity
-  feed. All of it is derived from existing `problems`/`books`/`submissions`
-  data by a pure `buildDashboardStats` function
-  (`src/lib/dashboard/stats.ts`, unit-tested), following the same
-  computed-view pattern as `board.ts` and `review-queue.ts` — nothing new
-  is written to the DB (the `badges` table stays unused; badges are
-  recomputed on read). A problem counts "solved" the same way the quest
-  board does: at least one `verified` submission. Streak/heatmap use UTC
-  calendar days; current streak has a one-day grace period (still counts
-  if yesterday was active but today has nothing yet). Badge thresholds
-  (7-day streak, 10 solved, 100 active days) are product-decision
-  constants documented inline, not derived from any spec.
+- **Status:** in progress (local branch)
+- **Branch:** `feat/issue-24-questpad-home`
+- **Notes:** Home hub linking to product routes. Included as base of #25.
 
 ## Backlog
 

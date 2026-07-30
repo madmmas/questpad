@@ -171,10 +171,8 @@ export function Scratchpad({
   return (
     <div className="flex flex-wrap gap-4">
       <div className="w-full flex-none sm:w-48">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-          Working on
-        </p>
-        <div className="overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
+        <p className="eyebrow mb-2">Working on</p>
+        <div className="overflow-hidden rounded-[var(--radius-md)] bg-panel-2">
           {/* eslint-disable-next-line @next/next/no-img-element -- thumbnail source can be a same-origin local upload or a Vercel Blob URL, so a static remotePatterns allowlist doesn't fit here */}
           <img
             src={referenceImageUrl}
@@ -185,15 +183,15 @@ export function Scratchpad({
       </div>
 
       <div className="flex min-w-72 flex-1 flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-2 rounded-xl border border-zinc-200 bg-white p-2 dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-border bg-panel p-2">
           <button
             type="button"
             onClick={() => setTool("pen")}
             aria-pressed={tool === "pen"}
-            className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+            className={`rounded-[10px] px-3 py-1.5 text-sm font-semibold ${
               tool === "pen"
-                ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                ? "bg-green text-green-ink"
+                : "bg-panel-2 text-fg-dim"
             }`}
           >
             Pen
@@ -202,10 +200,10 @@ export function Scratchpad({
             type="button"
             onClick={() => setTool("eraser")}
             aria-pressed={tool === "eraser"}
-            className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
+            className={`rounded-[10px] px-3 py-1.5 text-sm font-semibold ${
               tool === "eraser"
-                ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                ? "bg-green text-green-ink"
+                : "bg-panel-2 text-fg-dim"
             }`}
           >
             Eraser
@@ -214,7 +212,7 @@ export function Scratchpad({
             type="button"
             onClick={handleUndo}
             disabled={strokes.length === 0}
-            className="rounded-lg bg-zinc-100 px-3 py-1.5 text-sm font-medium text-zinc-600 disabled:opacity-40 dark:bg-zinc-800 dark:text-zinc-400"
+            className="btn-secondary !px-3 !py-1.5"
           >
             Undo
           </button>
@@ -222,7 +220,7 @@ export function Scratchpad({
             type="button"
             onClick={handleRedo}
             disabled={redoStack.length === 0}
-            className="rounded-lg bg-zinc-100 px-3 py-1.5 text-sm font-medium text-zinc-600 disabled:opacity-40 dark:bg-zinc-800 dark:text-zinc-400"
+            className="btn-secondary !px-3 !py-1.5"
           >
             Redo
           </button>
@@ -230,7 +228,7 @@ export function Scratchpad({
             type="button"
             onClick={handleClear}
             disabled={strokes.length === 0}
-            className="rounded-lg bg-zinc-100 px-3 py-1.5 text-sm font-medium text-zinc-600 disabled:opacity-40 dark:bg-zinc-800 dark:text-zinc-400"
+            className="btn-secondary !px-3 !py-1.5"
           >
             Clear
           </button>
@@ -249,21 +247,21 @@ export function Scratchpad({
                 style={{ backgroundColor: swatch }}
                 className={`h-5 w-5 rounded-full border-2 ${
                   tool === "pen" && color === swatch
-                    ? "border-zinc-900 dark:border-zinc-100"
+                    ? "border-fg"
                     : "border-transparent"
                 }`}
               />
             ))}
           </div>
 
-          <span className="ml-auto text-xs text-zinc-400">
+          <span className="ml-auto text-xs text-fg-faint">
             {pencilDetected ? "Apple Pencil detected" : "Apple Pencil ready"}
           </span>
         </div>
 
         <svg
           viewBox={`0 0 ${CANVAS_WIDTH} ${CANVAS_HEIGHT}`}
-          className="touch-none rounded-2xl"
+          className="touch-none rounded-[var(--radius-lg)] border border-border"
           style={{ backgroundColor: CANVAS_BACKGROUND, minHeight: 320 }}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
@@ -281,25 +279,20 @@ export function Scratchpad({
 
         <div className="flex items-center justify-end gap-2">
           {draftSaved ? (
-            <span className="mr-auto text-xs text-zinc-400">Draft saved</span>
+            <span className="mr-auto text-xs text-fg-faint">Draft saved</span>
           ) : null}
           {submitError ? (
-            <span
-              className="mr-auto text-xs text-red-600 dark:text-red-400"
-              role="alert"
-            >
+            <span className="mr-auto text-xs text-coral" role="alert">
               {submitError}
             </span>
           ) : null}
           {submitted ? (
-            <span className="mr-auto text-xs text-emerald-600 dark:text-emerald-400">
-              Submitted!
-            </span>
+            <span className="mr-auto text-xs text-green">Submitted!</span>
           ) : null}
           <button
             type="button"
             onClick={handleSaveDraft}
-            className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
+            className="btn-secondary"
           >
             Save draft
           </button>
@@ -307,7 +300,7 @@ export function Scratchpad({
             type="button"
             onClick={handleSubmit}
             disabled={submitting || strokes.length === 0}
-            className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900"
+            className="btn-primary"
           >
             {submitting ? "Submitting…" : "Submit quest"}
           </button>
