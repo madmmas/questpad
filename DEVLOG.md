@@ -6,20 +6,19 @@ issue.
 
 ## Active
 
-### #4 — Submission storage + parent review queue
+### #5 — Manual verify/reject with notes
 
 - **Status:** in progress (PR)
-- **Branch:** `feat/issue-4-submission-review-queue`
-- **Notes:** Submission storage itself landed already as part of #3
-  (`insertSubmission`/`listSubmissions` in
-  `src/lib/submissions/repository.ts`). This PR adds the remaining
-  parent-facing piece: `/parent/review` lists pending submissions and
-  lets a parent compare each one against its source problem image
-  (`src/components/review/review-queue.tsx`). Pairing submissions with
-  their problem/book and filtering to `pending`, newest first, is a pure
-  `buildReviewQueue` function (`src/lib/submissions/review-queue.ts`,
-  unit-tested), following the same pattern as `board.ts`. No
-  verify/reject actions or notes here — that's issue #5.
+- **Branch:** `feat/issue-5-verify-reject-notes`
+- **Notes:** `ReviewQueue` (`src/components/review/review-queue.tsx`) now
+  has a notes textarea plus "Needs revision"/"Verify quest" actions.
+  Both call `PATCH /api/submissions/[id]`, which runs a pure
+  `reviewSubmission` orchestration function
+  (`src/lib/submissions/review-submission.ts`, DI pattern, unit-tested)
+  that sets status (verified/rejected), reviewer (`parent`), and trims
+  notes to `null` when blank, via a new `updateSubmissionReview`
+  repository function. On success the reviewed submission drops out of
+  the local queue and the next pending item is selected.
 
 ## Backlog
 
@@ -28,13 +27,26 @@ issue.
 | [#1](https://github.com/madmmas/questpad/issues/1) | Image upload + tagging (parent)          | done        |
 | [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | done        |
 | [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | done        |
-| [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | in progress |
-| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | open        |
+| [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | done        |
+| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | in progress |
 | [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | open        |
 | [#7](https://github.com/madmmas/questpad/issues/7) | AI review integration (Claude API)       | open        |
 | [#8](https://github.com/madmmas/questpad/issues/8) | Telegram notifications                   | open        |
 
 ## Done
+
+### #4 — Submission storage + parent review queue
+
+- **Merged:** PR #19 (`feat/issue-4-submission-review-queue`)
+- **Notes:** Submission storage itself landed already as part of #3
+  (`insertSubmission`/`listSubmissions` in
+  `src/lib/submissions/repository.ts`). This PR added the remaining
+  parent-facing piece: `/parent/review` lists pending submissions and
+  lets a parent compare each one against its source problem image
+  (`src/components/review/review-queue.tsx`). Pairing submissions with
+  their problem/book and filtering to `pending`, newest first, is a pure
+  `buildReviewQueue` function (`src/lib/submissions/review-queue.ts`,
+  unit-tested), following the same pattern as `board.ts`.
 
 ### #3 — Scratchpad with Apple Pencil support
 
