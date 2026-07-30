@@ -23,3 +23,27 @@ export async function listSubmissions(): Promise<SubmissionRecord[]> {
     submittedAt: row.submittedAt,
   }));
 }
+
+export async function insertSubmission(input: {
+  problemId: string;
+  childId: string;
+  workImageUrl: string;
+}): Promise<SubmissionRecord> {
+  const db = getDb();
+  const [created] = await db
+    .insert(submissions)
+    .values({
+      problemId: input.problemId,
+      childId: input.childId,
+      workImageUrl: input.workImageUrl,
+    })
+    .returning();
+
+  return {
+    id: created.id,
+    problemId: created.problemId,
+    childId: created.childId,
+    status: created.status as SubmissionStatus,
+    submittedAt: created.submittedAt,
+  };
+}

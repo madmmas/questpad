@@ -62,6 +62,42 @@ export async function listProblems(): Promise<ProblemRecord[]> {
   }));
 }
 
+export async function getProblemById(
+  id: string,
+): Promise<ProblemRecord | null> {
+  const db = getDb();
+  const rows = await db
+    .select()
+    .from(problems)
+    .where(eq(problems.id, id))
+    .limit(1);
+
+  const row = rows[0];
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    bookId: row.bookId,
+    imageUrl: row.imageUrl,
+    difficulty: row.difficulty as Difficulty,
+    tags: row.tags,
+  };
+}
+
+export async function getBookById(id: string): Promise<BookRecord | null> {
+  const db = getDb();
+  const rows = await db.select().from(books).where(eq(books.id, id)).limit(1);
+
+  const row = rows[0];
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    title: row.title,
+    subject: row.subject,
+  };
+}
+
 export async function insertProblem(input: {
   bookId: string;
   imageUrl: string;
