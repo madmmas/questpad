@@ -6,23 +6,31 @@ issue.
 
 ## Active
 
-### #2 — Quest board browse view (child)
+### #3 — Scratchpad with Apple Pencil support
 
 - **Status:** in progress (PR)
-- **Branch:** `feat/issue-2-quest-board-browse`
-- **Notes:** `/board` page groups problems by book (sorted by title, then
-  difficulty within each book) and shows an unattempted/in-progress/solved
-  status per quest, derived from the latest submission for that problem
-  (`src/lib/problems/board.ts`, pure/unit-tested). Reads live from Drizzle
-  (`listBooks`/`listProblems`/`listSubmissions`) — no mock-data wiring.
+- **Branch:** `feat/issue-3-scratchpad-apple-pencil`
+- **Notes:** `/quest/[problemId]` renders `Scratchpad`
+  (`src/components/scratchpad/scratchpad.tsx`), an SVG canvas drawn via
+  Pointer Events + `perfect-freehand`, capturing pressure and tilt per
+  point (Apple Pencil in Safari). Drafts autosave to `localStorage`
+  (`src/lib/scratchpad/draft-storage.ts`, pure/unit-tested) and restore on
+  mount. Submitting renders the strokes to a standalone SVG
+  (`renderScratchpadSvg`), stores it (`storeSubmissionWork`, same
+  Blob/local-disk fallback as problem images), and inserts a `pending`
+  submission row via `submitScratchpadWork`
+  (`src/lib/submissions/create-submission.ts`, DI pattern, unit-tested).
+  Quest board cards now link to `/quest/[id]`. No auth/child-profile
+  modeling yet, so submissions use a fixed placeholder child id
+  (`src/lib/submissions/constants.ts`).
 
 ## Backlog
 
 | Issue                                              | Title                                    | Status      |
 | -------------------------------------------------- | ---------------------------------------- | ----------- |
 | [#1](https://github.com/madmmas/questpad/issues/1) | Image upload + tagging (parent)          | done        |
-| [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | in progress |
-| [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | open        |
+| [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | done        |
+| [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | in progress |
 | [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | open        |
 | [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | open        |
 | [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | open        |
@@ -30,6 +38,15 @@ issue.
 | [#8](https://github.com/madmmas/questpad/issues/8) | Telegram notifications                   | open        |
 
 ## Done
+
+### #2 — Quest board browse view (child)
+
+- **Merged:** PR #17 (`feat/issue-2-quest-board-browse`)
+- **Notes:** `/board` page groups problems by book (sorted by title, then
+  difficulty within each book) and shows an unattempted/in-progress/solved
+  status per quest, derived from the latest submission for that problem
+  (`src/lib/problems/board.ts`, pure/unit-tested). Reads live from Drizzle
+  (`listBooks`/`listProblems`/`listSubmissions`) — no mock-data wiring.
 
 ### #1 — Image upload + tagging (parent)
 

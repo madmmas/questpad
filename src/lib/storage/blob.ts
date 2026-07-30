@@ -33,3 +33,25 @@ export async function storeProblemImage(
   await writeFile(path.join(uploadsDir, filename), bytes);
   return { url: `/api/uploads/problems/${filename}` };
 }
+
+export async function storeSubmissionWork(
+  svgMarkup: string,
+): Promise<{ url: string }> {
+  const key = `submissions/${randomUUID()}.svg`;
+  const bytes = Buffer.from(svgMarkup, "utf-8");
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(key, bytes, {
+      access: "public",
+      contentType: "image/svg+xml",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
+    return { url: blob.url };
+  }
+
+  const uploadsDir = path.join(process.cwd(), "uploads", "submissions");
+  await mkdir(uploadsDir, { recursive: true });
+  const filename = path.basename(key);
+  await writeFile(path.join(uploadsDir, filename), bytes);
+  return { url: `/api/uploads/submissions/${filename}` };
+}

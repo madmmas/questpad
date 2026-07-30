@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { QuestBoardGroup } from "@/lib/problems/board";
 import type { Difficulty, QuestStatus } from "@/lib/problems/types";
 
@@ -51,8 +52,9 @@ export function QuestBoard({ groups }: { groups: QuestBoardGroup[] }) {
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
             {group.quests.map((quest) => (
-              <article
+              <Link
                 key={quest.id}
+                href={`/quest/${quest.id}`}
                 className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"
               >
                 <div className="h-24 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
@@ -78,7 +80,7 @@ export function QuestBoard({ groups }: { groups: QuestBoardGroup[] }) {
                 >
                   {STATUS_LABEL[quest.status]}
                 </span>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
