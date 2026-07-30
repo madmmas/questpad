@@ -6,19 +6,24 @@ issue.
 
 ## Active
 
-### #5 — Manual verify/reject with notes
+### #6 — Dashboard: XP, streak, heatmap, badges
 
 - **Status:** in progress (PR)
-- **Branch:** `feat/issue-5-verify-reject-notes`
-- **Notes:** `ReviewQueue` (`src/components/review/review-queue.tsx`) now
-  has a notes textarea plus "Needs revision"/"Verify quest" actions.
-  Both call `PATCH /api/submissions/[id]`, which runs a pure
-  `reviewSubmission` orchestration function
-  (`src/lib/submissions/review-submission.ts`, DI pattern, unit-tested)
-  that sets status (verified/rejected), reviewer (`parent`), and trims
-  notes to `null` when blank, via a new `updateSubmissionReview`
-  repository function. On success the reviewed submission drops out of
-  the local queue and the next pending item is selected.
+- **Branch:** `feat/issue-6-dashboard`
+- **Notes:** `/dashboard` renders solved/total by difficulty tier (ring +
+  bronze/silver/gold breakdown), current/max streak, active days, a
+  182-day activity heatmap, milestone badges, and a recent-activity
+  feed. All of it is derived from existing `problems`/`books`/`submissions`
+  data by a pure `buildDashboardStats` function
+  (`src/lib/dashboard/stats.ts`, unit-tested), following the same
+  computed-view pattern as `board.ts` and `review-queue.ts` — nothing new
+  is written to the DB (the `badges` table stays unused; badges are
+  recomputed on read). A problem counts "solved" the same way the quest
+  board does: at least one `verified` submission. Streak/heatmap use UTC
+  calendar days; current streak has a one-day grace period (still counts
+  if yesterday was active but today has nothing yet). Badge thresholds
+  (7-day streak, 10 solved, 100 active days) are product-decision
+  constants documented inline, not derived from any spec.
 
 ## Backlog
 
@@ -28,12 +33,25 @@ issue.
 | [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | done        |
 | [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | done        |
 | [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | done        |
-| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | in progress |
-| [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | open        |
+| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | done        |
+| [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | in progress |
 | [#7](https://github.com/madmmas/questpad/issues/7) | AI review integration (Claude API)       | open        |
 | [#8](https://github.com/madmmas/questpad/issues/8) | Telegram notifications                   | open        |
 
 ## Done
+
+### #5 — Manual verify/reject with notes
+
+- **Merged:** PR #20 (`feat/issue-5-verify-reject-notes`)
+- **Notes:** `ReviewQueue` (`src/components/review/review-queue.tsx`) now
+  has a notes textarea plus "Needs revision"/"Verify quest" actions.
+  Both call `PATCH /api/submissions/[id]`, which runs a pure
+  `reviewSubmission` orchestration function
+  (`src/lib/submissions/review-submission.ts`, DI pattern, unit-tested)
+  that sets status (verified/rejected), reviewer (`parent`), and trims
+  notes to `null` when blank, via a new `updateSubmissionReview`
+  repository function. On success the reviewed submission drops out of
+  the local queue and the next pending item is selected.
 
 ### #4 — Submission storage + parent review queue
 
