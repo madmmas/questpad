@@ -1,7 +1,9 @@
+import { eq } from "drizzle-orm";
 import { getDb } from "@/lib/db/client";
 import { submissions } from "@/lib/db/schema";
 
 export type SubmissionStatus = "pending" | "verified" | "rejected";
+export type SubmissionReviewer = "parent" | "ai";
 
 export type SubmissionRecord = {
   id: string;
@@ -48,5 +50,33 @@ export async function insertSubmission(input: {
     workImageUrl: created.workImageUrl,
     status: created.status as SubmissionStatus,
     submittedAt: created.submittedAt,
+  };
+}
+
+export async function updateSubmissionReview(input: {
+  id: string;
+  status: "verified" | "rejected";
+  reviewer: SubmissionReviewer;
+  reviewNotes: string | null;
+}): Promise<SubmissionRecord> {
+  const db = getDb();
+  const [updated] = await db
+    .update(submissions)
+    .set({
+      status: input.status,
+      reviewer: input.reviewer,
+      reviewNotes: input.reviewNotes,
+      reviewedAt: new Date(),
+    })
+    .where(eq(submissions.id, input.id))
+    .returning();
+
+  return {
+    id: updated.id,
+    problemId: updated.problemId,
+    childId: updated.childId,
+    workImageUrl: updated.workImageUrl,
+    status: updated.status as SubmissionStatus,
+    submittedAt: updated.submittedAt,
   };
 }
