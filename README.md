@@ -41,7 +41,7 @@ make logs        # follow container output
 make down        # stop
 ```
 
-Open the real product routes (the `/` home page is still the Next.js starter):
+Open product routes (or start at http://localhost:3000/ for links):
 
 - http://localhost:3000/board
 - http://localhost:3000/parent/upload

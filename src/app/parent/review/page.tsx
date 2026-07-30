@@ -16,15 +16,13 @@ export default async function ParentReviewPage() {
   const items = buildReviewQueue(submissions, problems, books);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-6 py-12">
+    <main className="flex flex-1 flex-col gap-8 py-2">
       <header className="flex flex-col gap-2">
-        <p className="text-sm font-medium uppercase tracking-wide text-zinc-500">
-          Parent review
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight">
+        <p className="eyebrow">Parent review</p>
+        <h1 className="font-display text-3xl font-extrabold tracking-tight">
           Review submissions
         </h1>
-        <p className="max-w-2xl text-zinc-600 dark:text-zinc-400">
+        <p className="max-w-2xl text-fg-dim">
           Compare each submission against its source problem before verifying
           it.
         </p>
