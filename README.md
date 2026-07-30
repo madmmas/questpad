@@ -28,13 +28,54 @@ Full rationale for each choice is in `docs/PRD.md`.
 
 ## Getting started
 
+### Option A — Docker Compose (recommended for a full local stack)
+
+Needs Docker Desktop / Docker Engine. Starts **Postgres** plus the **Next.js
+app** (UI and API routes — the same handlers that become Vercel Functions
+when deployed):
+
 ```bash
+make up          # or: docker compose up --build -d
+make smoke       # once ready: HTTP checks for /board, /dashboard, …
+make logs        # follow container output
+make down        # stop
+```
+
+Open the real product routes (the `/` home page is still the Next.js starter):
+
+- http://localhost:3000/board
+- http://localhost:3000/parent/upload
+- http://localhost:3000/parent/review
+- http://localhost:3000/dashboard
+
+`make help` lists all targets. Postgres data and local uploads live in Docker
+volumes (`make clean` deletes them).
+
+### Option B — Host Node + Compose Postgres only
+
+```bash
+make db-only
+cp .env.example .env.local
+# DATABASE_URL=postgresql://questpad:questpad@localhost:5433/questpad
+# DATABASE_DRIVER=postgres
 npm install
-cp .env.example .env.local   # fill in real secrets — never commit this file
 npm run dev
 ```
 
-Open http://localhost:3000.
+(Compose publishes Postgres on host port **5433** so it does not collide with a
+local Postgres on 5432. Inside the Compose network the app still uses
+`db:5432`.)
+
+### Option C — Hosted Neon (no Docker DB)
+
+```bash
+npm install
+cp .env.example .env.local   # set DATABASE_URL to your Neon URL
+npm run db:push              # push schema if the Neon DB is empty
+npm run dev
+```
+
+Leave `BLOB_READ_WRITE_TOKEN` empty to store images under `uploads/` locally.
 
 ## Project structure
 

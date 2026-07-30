@@ -6,9 +6,19 @@ issue.
 
 ## Active
 
-### #6 — Dashboard: XP, streak, heatmap, badges
+### #22 — Local Docker Compose stack (Postgres + Next.js API routes)
 
 - **Status:** in progress (PR)
+- **Branch:** `feat/issue-22-docker-compose-local-stack`
+- **Notes:** Compose runs Postgres 16 + Next.js (`make up`). Neon
+  SQL-over-HTTP cannot talk to stock Postgres, so `getDb()` now supports a
+  TCP `postgres` driver (auto for localhost/`db`, or `DATABASE_DRIVER`).
+  App Router `src/app/api/**` handlers are the Vercel Functions — no
+  separate Functions container. Schema bootstrap: `docker/db/init.sql`.
+
+### #6 — Dashboard: XP, streak, heatmap, badges
+
+- **Status:** done (merged)
 - **Branch:** `feat/issue-6-dashboard`
 - **Notes:** `/dashboard` renders solved/total by difficulty tier (ring +
   bronze/silver/gold breakdown), current/max streak, active days, a
@@ -27,16 +37,17 @@ issue.
 
 ## Backlog
 
-| Issue                                              | Title                                    | Status      |
-| -------------------------------------------------- | ---------------------------------------- | ----------- |
-| [#1](https://github.com/madmmas/questpad/issues/1) | Image upload + tagging (parent)          | done        |
-| [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | done        |
-| [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | done        |
-| [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | done        |
-| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | done        |
-| [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | in progress |
-| [#7](https://github.com/madmmas/questpad/issues/7) | AI review integration (Claude API)       | open        |
-| [#8](https://github.com/madmmas/questpad/issues/8) | Telegram notifications                   | open        |
+| Issue                                                | Title                                    | Status      |
+| ---------------------------------------------------- | ---------------------------------------- | ----------- |
+| [#1](https://github.com/madmmas/questpad/issues/1)   | Image upload + tagging (parent)          | done        |
+| [#2](https://github.com/madmmas/questpad/issues/2)   | Quest board browse view (child)          | done        |
+| [#3](https://github.com/madmmas/questpad/issues/3)   | Scratchpad with Apple Pencil support     | done        |
+| [#4](https://github.com/madmmas/questpad/issues/4)   | Submission storage + parent review queue | done        |
+| [#5](https://github.com/madmmas/questpad/issues/5)   | Manual verify/reject with notes          | done        |
+| [#6](https://github.com/madmmas/questpad/issues/6)   | Dashboard: XP, streak, heatmap, badges   | done        |
+| [#7](https://github.com/madmmas/questpad/issues/7)   | AI review integration (Claude API)       | open        |
+| [#8](https://github.com/madmmas/questpad/issues/8)   | Telegram notifications                   | open        |
+| [#22](https://github.com/madmmas/questpad/issues/22) | Local Docker Compose stack               | in progress |
 
 ## Done
 

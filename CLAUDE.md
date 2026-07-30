@@ -68,14 +68,17 @@ mutations rather than calling `getDb()` directly from business logic.
 work in local dev without any Blob credentials — don't assume Blob is
 always configured.
 
-**Database**: Neon Postgres via `drizzle-orm/neon-http`
-(`src/lib/db/client.ts`, throws if `DATABASE_URL` unset). Schema lives in
+**Database**: Neon Postgres in production via `drizzle-orm/neon-http`; local
+Docker Compose uses TCP via `drizzle-orm/postgres-js`. Driver selection lives
+in `src/lib/db/driver.ts` / `getDb()` (`DATABASE_DRIVER` override, else
+infer from host). Throws if `DATABASE_URL` unset. Schema lives in
 `src/lib/db/schema.ts`; run `npm run db:generate` after editing it and
-never hand-edit generated files under `drizzle/`. Core tables: `books`,
-`problems` (difficulty is `bronze | silver | gold`, not
-easy/medium/hard), `submissions` (status `pending | verified | rejected`,
-reviewer `parent | ai`), `badges`. `child_id` is a bare UUID column with
-no `children` table yet (see PRD open decision on modeling multiple kids).
+never hand-edit generated files under `drizzle/` (Compose bootstrap SQL is
+`docker/db/init.sql`). Core tables: `books`, `problems` (difficulty is
+`bronze | silver | gold`, not easy/medium/hard), `submissions` (status
+`pending | verified | rejected`, reviewer `parent | ai`), `badges`.
+`child_id` is a bare UUID column with no `children` table yet (see PRD open
+decision on modeling multiple kids). Local stack: `make up` (see Makefile).
 
 **Auth**: `next-auth` is a dependency but no auth code exists yet in
 `src/` — there's no session/middleware wiring to reason about currently.
