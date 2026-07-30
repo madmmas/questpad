@@ -1,0 +1,55 @@
+# Local full stack: Postgres + Next.js (pages + API routes / Vercel Functions).
+#
+#   make up
+#   open http://localhost:3000/board
+#
+# Neon SQL-over-HTTP cannot talk to this Postgres container — the app uses the
+# postgres (TCP) driver when DATABASE_DRIVER=postgres (set below).
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: questpad
+      POSTGRES_PASSWORD: questpad
+      POSTGRES_DB: questpad
+    ports:
+      # Host 5433 avoids clashing with a local Postgres already on 5432.
+      - "5433:5432"
+    volumes:
+      - questpad_pg:/var/lib/postgresql/data
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U questpad -d questpad"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://questpad:questpad@db:5432/questpad
+      DATABASE_DRIVER: postgres
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: local-docker-dev-secret
+      # Unset Blob token → local uploads/ fallback (src/lib/storage/blob.ts)
+      BLOB_READ_WRITE_TOKEN: ""
+    volumes:
+      - .:/app
+      - app_node_modules:/app/node_modules
+      - app_next:/app/.next
+      - questpad_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  questpad_pg:
+  questpad_uploads:
+  app_node_modules:
+  app_next:
