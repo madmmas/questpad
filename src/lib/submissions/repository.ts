@@ -7,6 +7,7 @@ export type SubmissionRecord = {
   id: string;
   problemId: string;
   childId: string;
+  workImageUrl: string | null;
   status: SubmissionStatus;
   submittedAt: Date;
 };
@@ -19,6 +20,7 @@ export async function listSubmissions(): Promise<SubmissionRecord[]> {
     id: row.id,
     problemId: row.problemId,
     childId: row.childId,
+    workImageUrl: row.workImageUrl,
     status: row.status as SubmissionStatus,
     submittedAt: row.submittedAt,
   }));
@@ -43,6 +45,7 @@ export async function insertSubmission(input: {
     id: created.id,
     problemId: created.problemId,
     childId: created.childId,
+    workImageUrl: created.workImageUrl,
     status: created.status as SubmissionStatus,
     submittedAt: created.submittedAt,
   };

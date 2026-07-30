@@ -6,10 +6,39 @@ issue.
 
 ## Active
 
-### #3 — Scratchpad with Apple Pencil support
+### #4 — Submission storage + parent review queue
 
 - **Status:** in progress (PR)
-- **Branch:** `feat/issue-3-scratchpad-apple-pencil`
+- **Branch:** `feat/issue-4-submission-review-queue`
+- **Notes:** Submission storage itself landed already as part of #3
+  (`insertSubmission`/`listSubmissions` in
+  `src/lib/submissions/repository.ts`). This PR adds the remaining
+  parent-facing piece: `/parent/review` lists pending submissions and
+  lets a parent compare each one against its source problem image
+  (`src/components/review/review-queue.tsx`). Pairing submissions with
+  their problem/book and filtering to `pending`, newest first, is a pure
+  `buildReviewQueue` function (`src/lib/submissions/review-queue.ts`,
+  unit-tested), following the same pattern as `board.ts`. No
+  verify/reject actions or notes here — that's issue #5.
+
+## Backlog
+
+| Issue                                              | Title                                    | Status      |
+| -------------------------------------------------- | ---------------------------------------- | ----------- |
+| [#1](https://github.com/madmmas/questpad/issues/1) | Image upload + tagging (parent)          | done        |
+| [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | done        |
+| [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | done        |
+| [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | in progress |
+| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | open        |
+| [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | open        |
+| [#7](https://github.com/madmmas/questpad/issues/7) | AI review integration (Claude API)       | open        |
+| [#8](https://github.com/madmmas/questpad/issues/8) | Telegram notifications                   | open        |
+
+## Done
+
+### #3 — Scratchpad with Apple Pencil support
+
+- **Merged:** PR #18 (`feat/issue-3-scratchpad-apple-pencil`)
 - **Notes:** `/quest/[problemId]` renders `Scratchpad`
   (`src/components/scratchpad/scratchpad.tsx`), an SVG canvas drawn via
   Pointer Events + `perfect-freehand`, capturing pressure and tilt per
@@ -23,21 +52,6 @@ issue.
   Quest board cards now link to `/quest/[id]`. No auth/child-profile
   modeling yet, so submissions use a fixed placeholder child id
   (`src/lib/submissions/constants.ts`).
-
-## Backlog
-
-| Issue                                              | Title                                    | Status      |
-| -------------------------------------------------- | ---------------------------------------- | ----------- |
-| [#1](https://github.com/madmmas/questpad/issues/1) | Image upload + tagging (parent)          | done        |
-| [#2](https://github.com/madmmas/questpad/issues/2) | Quest board browse view (child)          | done        |
-| [#3](https://github.com/madmmas/questpad/issues/3) | Scratchpad with Apple Pencil support     | in progress |
-| [#4](https://github.com/madmmas/questpad/issues/4) | Submission storage + parent review queue | open        |
-| [#5](https://github.com/madmmas/questpad/issues/5) | Manual verify/reject with notes          | open        |
-| [#6](https://github.com/madmmas/questpad/issues/6) | Dashboard: XP, streak, heatmap, badges   | open        |
-| [#7](https://github.com/madmmas/questpad/issues/7) | AI review integration (Claude API)       | open        |
-| [#8](https://github.com/madmmas/questpad/issues/8) | Telegram notifications                   | open        |
-
-## Done
 
 ### #2 — Quest board browse view (child)
 
