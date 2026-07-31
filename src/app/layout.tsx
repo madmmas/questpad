@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2, Inter } from "next/font/google";
 import { AppShell } from "@/components/shell/app-shell";
+import { getSession } from "@/lib/auth/get-session";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,18 +20,20 @@ export const metadata: Metadata = {
   description: "Single-family learning tracker",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${baloo.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
-        <AppShell>{children}</AppShell>
+        <AppShell initialSession={session}>{children}</AppShell>
       </body>
     </html>
   );

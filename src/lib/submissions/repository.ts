@@ -11,7 +11,10 @@ export type SubmissionRecord = {
   childId: string;
   workImageUrl: string | null;
   status: SubmissionStatus;
+  reviewer: SubmissionReviewer | null;
+  reviewNotes: string | null;
   submittedAt: Date;
+  reviewedAt: Date | null;
 };
 
 export async function listSubmissions(): Promise<SubmissionRecord[]> {
@@ -24,7 +27,10 @@ export async function listSubmissions(): Promise<SubmissionRecord[]> {
     childId: row.childId,
     workImageUrl: row.workImageUrl,
     status: row.status as SubmissionStatus,
+    reviewer: (row.reviewer as SubmissionReviewer | null) ?? null,
+    reviewNotes: row.reviewNotes,
     submittedAt: row.submittedAt,
+    reviewedAt: row.reviewedAt,
   }));
 }
 
@@ -49,7 +55,10 @@ export async function insertSubmission(input: {
     childId: created.childId,
     workImageUrl: created.workImageUrl,
     status: created.status as SubmissionStatus,
+    reviewer: (created.reviewer as SubmissionReviewer | null) ?? null,
+    reviewNotes: created.reviewNotes,
     submittedAt: created.submittedAt,
+    reviewedAt: created.reviewedAt,
   };
 }
 
@@ -77,6 +86,9 @@ export async function updateSubmissionReview(input: {
     childId: updated.childId,
     workImageUrl: updated.workImageUrl,
     status: updated.status as SubmissionStatus,
+    reviewer: (updated.reviewer as SubmissionReviewer | null) ?? null,
+    reviewNotes: updated.reviewNotes,
     submittedAt: updated.submittedAt,
+    reviewedAt: updated.reviewedAt,
   };
 }

@@ -10,8 +10,12 @@ describe("submitScratchpadWork", () => {
       id: "submission-1",
       problemId: "problem-1",
       childId: "child-1",
+      workImageUrl: "https://blob.example/submissions/work.svg",
       status: "pending",
+      reviewer: null,
+      reviewNotes: null,
       submittedAt: new Date("2026-01-01"),
+      reviewedAt: null,
     });
 
     const result = await submitScratchpadWork(

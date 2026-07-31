@@ -37,6 +37,11 @@ services:
       DATABASE_DRIVER: postgres
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: local-docker-dev-secret
+      AUTH_SECRET: local-docker-dev-secret
+      DEMO_PARENT_USER: parent
+      DEMO_PARENT_PASSWORD: parent123
+      DEMO_CHILD_USER: child
+      DEMO_CHILD_PASSWORD: child123
       # Unset Blob token → local uploads/ fallback (src/lib/storage/blob.ts)
       BLOB_READ_WRITE_TOKEN: ""
     volumes:
