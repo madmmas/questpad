@@ -2,7 +2,7 @@ COMPOSE ?= docker compose
 APP_SERVICE ?= app
 DB_SERVICE ?= db
 
-.PHONY: help up down restart build logs ps db-shell db-only app-shell test lint smoke clean
+.PHONY: help up down restart build logs ps db-shell db-only app-shell test lint smoke clean demo-seed demo-reset
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -62,3 +62,15 @@ smoke: ## HTTP smoke check against the running Compose app
 
 clean: ## Stop containers and delete Compose volumes (destructive)
 	$(COMPOSE) down -v
+
+# Opt-in demo data (issue #34). Does not run on `make up`.
+DEMO_DATABASE_URL ?= postgresql://questpad:questpad@localhost:5433/questpad
+
+demo-seed: ## Truncate + seed synthetic demo data into local Compose Postgres
+	@$(COMPOSE) up -d $(DB_SERVICE)
+	@echo "Waiting for Postgres..."
+	@$(COMPOSE) exec -T $(DB_SERVICE) sh -c 'until pg_isready -U questpad -d questpad >/dev/null 2>&1; do sleep 1; done'
+	ALLOW_DEMO_SEED=1 DATABASE_URL=$(DEMO_DATABASE_URL) DATABASE_DRIVER=postgres npm run db:seed
+
+demo-reset: ## Wipe seeded tables and reseed (same as demo-seed)
+	$(MAKE) demo-seed

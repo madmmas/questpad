@@ -28,7 +28,10 @@ npm run test:watch      # Vitest in watch mode
 npm run test:e2e        # Playwright e2e (tests/e2e); builds+starts the app in CI, reuses `npm run dev` locally
 npm run db:generate      # generate Drizzle migration from schema changes in src/lib/db/schema.ts
 npm run db:push           # push schema straight to the Neon database (no migration file)
+npm run db:seed           # load public/mock-data into local Postgres (requires ALLOW_DEMO_SEED=1)
 ```
+
+Compose helpers: `make demo-seed` / `make demo-reset` (opt-in; not run by `make up`).
 
 Single test file:
 

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "10000000-0000-4000-8000-000000000001",
+    "title": "Math Workbook",
+    "subject": "Math"
+  },
+  {
+    "id": "10000000-0000-4000-8000-000000000002",
+    "title": "Science Practice",
+    "subject": "Science"
+  },
+  {
+    "id": "10000000-0000-4000-8000-000000000003",
+    "title": "Reading Comprehension",
+    "subject": "Reading"
+  }
+]
