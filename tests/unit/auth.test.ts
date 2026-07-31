@@ -7,24 +7,22 @@ import {
 } from "@/lib/auth/session";
 
 describe("authenticateDemoLogin", () => {
-  it("accepts the demo parent account", () => {
+  it("accepts the demo parent account and returns parent role", () => {
     expect(
       authenticateDemoLogin({
         username: "parent",
         password: "parent123",
-        role: "parent",
       }),
     ).toEqual({ username: "parent", role: "parent" });
   });
 
-  it("rejects wrong role even with matching username/password", () => {
+  it("accepts the demo child account and returns child role", () => {
     expect(
       authenticateDemoLogin({
-        username: "parent",
-        password: "parent123",
-        role: "child",
+        username: "child",
+        password: "child123",
       }),
-    ).toBeNull();
+    ).toEqual({ username: "child", role: "child" });
   });
 
   it("rejects bad passwords", () => {
@@ -32,7 +30,6 @@ describe("authenticateDemoLogin", () => {
       authenticateDemoLogin({
         username: "child",
         password: "nope",
-        role: "child",
       }),
     ).toBeNull();
   });

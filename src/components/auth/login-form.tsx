@@ -2,13 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { ROLES, type Role } from "@/lib/auth/types";
 
 export function LoginForm({ nextPath }: { nextPath: string }) {
   const router = useRouter();
-  const [username, setUsername] = useState("parent");
-  const [password, setPassword] = useState("parent123");
-  const [role, setRole] = useState<Role>("parent");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -20,7 +18,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, role }),
+        body: JSON.stringify({ username, password }),
       });
       const payload = (await response.json()) as { error?: string };
       if (!response.ok) {
@@ -53,31 +51,6 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
       </label>
 
       <label className="flex flex-col gap-2 text-sm">
-        <span className="font-semibold">Role</span>
-        <select
-          value={role}
-          onChange={(event) => {
-            const next = event.target.value as Role;
-            setRole(next);
-            if (next === "parent") {
-              setUsername("parent");
-              setPassword("parent123");
-            } else {
-              setUsername("child");
-              setPassword("child123");
-            }
-          }}
-          className="field"
-        >
-          {ROLES.map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label className="flex flex-col gap-2 text-sm">
         <span className="font-semibold">Password</span>
         <input
           type="password"
@@ -101,7 +74,8 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
 
       <p className="text-xs text-fg-faint">
         Demo accounts: <code>parent</code> / <code>parent123</code> (parent) or{" "}
-        <code>child</code> / <code>child123</code> (child).
+        <code>child</code> / <code>child123</code> (child). Role is taken from
+        the account, not chosen here.
       </p>
     </form>
   );

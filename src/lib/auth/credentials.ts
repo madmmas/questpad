@@ -1,4 +1,4 @@
-import { isRole, type Role, type SessionUser } from "./types";
+import type { Role, SessionUser } from "./types";
 
 export type DemoAccount = {
   username: string;
@@ -42,24 +42,20 @@ export function getDemoAccounts(): DemoAccount[] {
 }
 
 /**
- * Authenticate a demo login. Role must match the account's configured role.
+ * Authenticate a demo login. Role comes from the matched account credentials.
  */
 export function authenticateDemoLogin(input: {
   username: string;
   password: string;
-  role: string;
 }): SessionUser | null {
   const username = input.username.trim();
   const password = input.password;
-  if (!username || !password || !isRole(input.role)) {
+  if (!username || !password) {
     return null;
   }
 
   const match = getDemoAccounts().find(
-    (account) =>
-      account.username === username &&
-      account.password === password &&
-      account.role === input.role,
+    (account) => account.username === username && account.password === password,
   );
 
   if (!match) {

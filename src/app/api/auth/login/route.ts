@@ -5,7 +5,7 @@ import { createSessionToken, sessionCookieOptions } from "@/lib/auth/session";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  let body: { username?: string; password?: string; role?: string };
+  let body: { username?: string; password?: string };
   try {
     body = (await request.json()) as typeof body;
   } catch {
@@ -15,12 +15,11 @@ export async function POST(request: Request) {
   const user = authenticateDemoLogin({
     username: String(body.username ?? ""),
     password: String(body.password ?? ""),
-    role: String(body.role ?? ""),
   });
 
   if (!user) {
     return NextResponse.json(
-      { error: "Invalid username, role, or password" },
+      { error: "Invalid username or password" },
       { status: 401 },
     );
   }

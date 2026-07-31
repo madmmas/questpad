@@ -2,10 +2,13 @@ import { expect, test } from "@playwright/test";
 
 async function login(
   page: import("@playwright/test").Page,
-  role: "parent" | "child",
+  account: "parent" | "child",
 ) {
   await page.goto("/login");
-  await page.locator("select").selectOption(role);
+  await page.getByLabel("Username").fill(account);
+  await page
+    .getByLabel("Password")
+    .fill(account === "parent" ? "parent123" : "child123");
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/dashboard$/);
 }

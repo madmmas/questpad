@@ -25,7 +25,8 @@ export default async function LoginPage({ searchParams }: PageProps) {
           Sign in
         </h1>
         <p className="max-w-md text-fg-dim">
-          Pick a demo role to open the parent or child experience.
+          Sign in with a demo account. Your role (parent or child) comes from
+          those credentials.
         </p>
       </header>
       <LoginForm nextPath={nextPath} />
