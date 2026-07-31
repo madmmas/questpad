@@ -42,6 +42,11 @@ services:
       DEMO_PARENT_PASSWORD: parent123
       DEMO_CHILD_USER: child
       DEMO_CHILD_PASSWORD: child123
+      # AI review (#7): local by default in Compose; set claude + ANTHROPIC_API_KEY to use Claude
+      AI_REVIEW_PROVIDER: local
+      AI_REVIEW_ON_SUBMIT: "0"
+      ANTHROPIC_API_KEY: ""
+      ANTHROPIC_MODEL: claude-sonnet-4-20250514
       # Unset Blob token → local uploads/ fallback (src/lib/storage/blob.ts)
       BLOB_READ_WRITE_TOKEN: ""
     volumes:

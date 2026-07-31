@@ -63,6 +63,17 @@ Or: `ALLOW_DEMO_SEED=1 DATABASE_URL=… DATABASE_DRIVER=postgres npm run db:seed
 After seeding, parent Submit Review shows pending items and the quest board /
 dashboard are non-empty for both roles.
 
+AI review (issue #7) is config-driven:
+
+| Env                   | Purpose                                                               |
+| --------------------- | --------------------------------------------------------------------- |
+| `AI_REVIEW_PROVIDER`  | `local`, `claude`, or `auto` (Claude when `ANTHROPIC_API_KEY` is set) |
+| `ANTHROPIC_API_KEY`   | Claude secret (never commit — set in `.env.local` / Vercel env)       |
+| `ANTHROPIC_MODEL`     | optional model id                                                     |
+| `AI_REVIEW_ON_SUBMIT` | `1` to auto-review after a child submits                              |
+
+Parent **Submit Review** also has an **Ask AI to review** button.
+
 `make help` lists all targets. Postgres data and local uploads live in Docker
 volumes (`make clean` deletes them).
 
