@@ -9,7 +9,10 @@ describe("reviewSubmission", () => {
       childId: "child-1",
       workImageUrl: "work.svg",
       status: "verified",
+      reviewer: "parent",
+      reviewNotes: "Great work!",
       submittedAt: new Date("2026-01-01"),
+      reviewedAt: new Date("2026-01-01"),
     });
 
     const result = await reviewSubmission(
@@ -37,7 +40,10 @@ describe("reviewSubmission", () => {
       childId: "child-1",
       workImageUrl: "work.svg",
       status: "rejected",
+      reviewer: "parent",
+      reviewNotes: null,
       submittedAt: new Date("2026-01-01"),
+      reviewedAt: new Date("2026-01-01"),
     });
 
     await reviewSubmission(
@@ -60,7 +66,10 @@ describe("reviewSubmission", () => {
       childId: "child-1",
       workImageUrl: "work.svg",
       status: "rejected",
+      reviewer: "parent",
+      reviewNotes: null,
       submittedAt: new Date("2026-01-01"),
+      reviewedAt: new Date("2026-01-01"),
     });
 
     await reviewSubmission(

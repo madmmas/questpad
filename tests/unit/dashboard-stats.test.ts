@@ -39,7 +39,10 @@ function submission(overrides: {
     childId: "child-1",
     workImageUrl: "work.svg",
     status: overrides.status ?? "verified",
+    reviewer: null,
+    reviewNotes: null,
     submittedAt: new Date(overrides.submittedAt),
+    reviewedAt: null,
   };
 }
 

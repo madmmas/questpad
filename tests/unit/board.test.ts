@@ -71,7 +71,10 @@ describe("buildQuestBoard", () => {
           childId: "child-1",
           workImageUrl: "work1",
           status: "rejected",
+          reviewer: null,
+          reviewNotes: null,
           submittedAt: new Date("2026-01-01"),
+          reviewedAt: null,
         },
         {
           id: "s2",
@@ -79,7 +82,10 @@ describe("buildQuestBoard", () => {
           childId: "child-1",
           workImageUrl: "work2",
           status: "pending",
+          reviewer: null,
+          reviewNotes: null,
           submittedAt: new Date("2026-01-02"),
+          reviewedAt: null,
         },
       ],
     );
@@ -106,7 +112,10 @@ describe("buildQuestBoard", () => {
           childId: "child-1",
           workImageUrl: "work1",
           status: "pending",
+          reviewer: null,
+          reviewNotes: null,
           submittedAt: new Date("2026-01-01"),
+          reviewedAt: null,
         },
         {
           id: "s2",
@@ -114,7 +123,10 @@ describe("buildQuestBoard", () => {
           childId: "child-1",
           workImageUrl: "work2",
           status: "verified",
+          reviewer: null,
+          reviewNotes: null,
           submittedAt: new Date("2026-01-02"),
+          reviewedAt: null,
         },
       ],
     );

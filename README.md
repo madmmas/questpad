@@ -41,12 +41,16 @@ make logs        # follow container output
 make down        # stop
 ```
 
-Open product routes (or start at http://localhost:3000/ for links):
+Open http://localhost:3000/login with the demo accounts:
 
-- http://localhost:3000/board
-- http://localhost:3000/parent/upload
-- http://localhost:3000/parent/review
-- http://localhost:3000/dashboard
+| Username | Role   | Password    |
+| -------- | ------ | ----------- |
+| `parent` | parent | `parent123` |
+| `child`  | child  | `child123`  |
+
+Then use the role-specific tabs (parent: Dashboard / Quest Board / Submit
+Review / Add Quest; child: Dashboard / Quest Board / Start Quest /
+Scratchpad / Review).
 
 `make help` lists all targets. Postgres data and local uploads live in Docker
 volumes (`make clean` deletes them).

@@ -1,30 +1,100 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSyncExternalStore } from "react";
+import type { Role, SessionUser } from "@/lib/auth/types";
 
-const NAV = [
-  { href: "/dashboard", label: "Progress" },
-  { href: "/board", label: "Quest board" },
-  { href: "/parent/review", label: "Review" },
-  { href: "/parent/upload", label: "Add quests" },
-] as const;
+type NavItem = {
+  href: string;
+  label: string;
+  match?: (pathname: string) => boolean;
+};
 
-function tabActive(pathname: string, href: string) {
-  if (href === "/board") {
-    return pathname === "/board" || pathname.startsWith("/quest/");
-  }
-  return pathname === href || pathname.startsWith(`${href}/`);
+const PARENT_NAV: NavItem[] = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/board", label: "Quest Board" },
+  { href: "/parent/review", label: "Submit Review" },
+  { href: "/parent/upload", label: "Add Quest" },
+];
+
+const CHILD_NAV: NavItem[] = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/board", label: "Quest Board" },
+  { href: "/board", label: "Start Quest", match: () => false },
+  {
+    href: "/board",
+    label: "Scratchpad",
+    match: (pathname) => pathname.startsWith("/quest/"),
+  },
+  { href: "/child/review", label: "Review" },
+];
+
+function navForRole(role: Role): NavItem[] {
+  return role === "parent" ? PARENT_NAV : CHILD_NAV;
 }
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+function tabActive(pathname: string, item: NavItem) {
+  if (item.match) {
+    return item.match(pathname);
+  }
+  if (item.href === "/board") {
+    return pathname === "/board";
+  }
+  return pathname === item.href || pathname.startsWith(`${item.href}/`);
+}
+
+function initialFromUsername(username: string) {
+  return username.trim().charAt(0).toUpperCase() || "?";
+}
+
+function readScratchpadHref(): string {
+  try {
+    const last = window.localStorage.getItem("questpad:lastProblemId");
+    return last ? `/quest/${last}` : "/board";
+  } catch {
+    return "/board";
+  }
+}
+
+function useScratchpadHref() {
+  return useSyncExternalStore(
+    () => () => {},
+    readScratchpadHref,
+    () => "/board",
+  );
+}
+
+export function AppShell({
+  children,
+  initialSession,
+}: {
+  children: React.ReactNode;
+  initialSession: SessionUser | null;
+}) {
   const pathname = usePathname();
+  const router = useRouter();
+  const scratchpadHref = useScratchpadHref();
+  const session = initialSession;
+  const isLogin = pathname === "/login";
+
+  async function signOut() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.replace("/login");
+    router.refresh();
+  }
+
+  if (isLogin) {
+    return <>{children}</>;
+  }
+
+  const nav = session ? navForRole(session.role) : [];
 
   return (
     <div className="mx-auto flex w-full max-w-[1040px] flex-1 flex-col px-6 py-6">
       <header className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <Link
-          href="/"
+          href={session ? "/dashboard" : "/login"}
           className="font-display flex items-center gap-2 text-[26px] font-extrabold tracking-wide text-fg"
         >
           <span
@@ -34,58 +104,57 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           QuestPad
         </Link>
 
-        <div className="flex items-center gap-3.5">
-          <div className="flex min-w-[150px] flex-col gap-1.5">
-            <div className="text-sm font-semibold">Explorer</div>
-            <div className="flex items-center gap-2">
-              <span className="font-display whitespace-nowrap rounded-lg bg-gold px-2 py-0.5 text-[11px] font-bold text-bg">
-                LVL 12
-              </span>
-              <div className="h-2 min-w-20 flex-1 overflow-hidden rounded-md bg-panel-2">
-                <div
-                  className="h-full rounded-md"
-                  style={{
-                    width: "64%",
-                    background:
-                      "linear-gradient(90deg, var(--green), var(--blue))",
-                  }}
-                />
+        {session ? (
+          <div className="flex items-center gap-3.5">
+            <div className="flex min-w-[150px] flex-col gap-1.5">
+              <div className="text-sm font-semibold capitalize">
+                {session.username}{" "}
+                <span className="text-fg-faint">({session.role})</span>
               </div>
-              <span className="whitespace-nowrap text-[11px] text-fg-faint">
-                640 / 1000 XP
-              </span>
+              <button
+                type="button"
+                onClick={signOut}
+                className="w-fit text-left text-[11px] font-semibold text-fg-dim hover:text-fg"
+              >
+                Sign out
+              </button>
+            </div>
+            <div
+              aria-hidden
+              className="flex h-12 w-12 items-center justify-center rounded-[14px] border-2 border-panel-2 font-display text-lg font-extrabold text-bg"
+              style={{
+                background:
+                  "linear-gradient(160deg, var(--purple), var(--blue))",
+              }}
+            >
+              {initialFromUsername(session.username)}
             </div>
           </div>
-          <div
-            aria-hidden
-            className="flex h-12 w-12 items-center justify-center rounded-[14px] border-2 border-panel-2 font-display text-lg font-extrabold text-bg"
-            style={{
-              background: "linear-gradient(160deg, var(--purple), var(--blue))",
-            }}
-          >
-            E
-          </div>
-        </div>
+        ) : null}
       </header>
 
-      <nav aria-label="Primary" className="mb-5 flex flex-wrap gap-2">
-        {NAV.map((item) => {
-          const active = tabActive(pathname, item.href);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`rounded-[10px] border px-[18px] py-2 text-sm font-semibold ${
-                active
-                  ? "border-green bg-green text-green-ink"
-                  : "border-border bg-panel text-fg-dim hover:text-fg"
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+      {session ? (
+        <nav aria-label="Primary" className="mb-5 flex flex-wrap gap-2">
+          {nav.map((item) => {
+            const href =
+              item.label === "Scratchpad" ? scratchpadHref : item.href;
+            const active = tabActive(pathname, item);
+            return (
+              <Link
+                key={`${item.label}-${href}`}
+                href={href}
+                className={`rounded-[10px] border px-[18px] py-2 text-sm font-semibold ${
+                  active
+                    ? "border-green bg-green text-green-ink"
+                    : "border-border bg-panel text-fg-dim hover:text-fg"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      ) : null}
 
       <div className="flex flex-1 flex-col">{children}</div>
     </div>

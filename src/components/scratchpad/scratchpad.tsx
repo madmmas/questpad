@@ -63,6 +63,11 @@ export function Scratchpad({
     // localStorage draft only after mounting on the client.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setStrokes(loadDraft(storage, problemId));
+    try {
+      window.localStorage.setItem("questpad:lastProblemId", problemId);
+    } catch {
+      // Ignore quota / private-mode failures.
+    }
   }, [problemId]);
 
   useEffect(() => {

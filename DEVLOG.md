@@ -6,20 +6,19 @@ issue.
 
 ## Active
 
+### #32 — Fake login + role-separated UI (parent vs child)
+
+- **Status:** in progress (PR)
+- **Branch:** `feat/issue-32-fake-login-roles`
+- **Notes:** Demo cookie session (`/login` with username/role/password),
+  role-specific `AppShell` tabs, `src/proxy.ts` route gates, child review
+  feed at `/child/review`. Related older auth issues (#26–#29) remain open
+  for a later real PIN flow.
+
 ### #25 — Apply QuestPad mockup theme
 
-- **Status:** in progress
+- **Status:** done (merged)
 - **Branch:** `feat/issue-25-mockup-theme`
-- **Notes:** Port tokens/fonts/shell from `mock-ui/questpad-mockup.html`
-  into the Next app (dark navy canvas, Baloo 2 + Inter, green primary,
-  bronze/silver/gold accents, header + Progress/Quest board/Review/Add
-  quests tabs).
-
-### #24 — Replace create-next-app starter on /
-
-- **Status:** in progress (local branch)
-- **Branch:** `feat/issue-24-questpad-home`
-- **Notes:** Home hub linking to product routes. Included as base of #25.
 
 ## Backlog
 
