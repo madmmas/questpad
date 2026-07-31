@@ -69,11 +69,15 @@ export function ChildReviewFeed({ items }: { items: ChildReviewItem[] }) {
 
           {item.submission.reviewNotes ? (
             <p className="rounded-[10px] bg-panel-2 px-3 py-2 text-sm text-fg">
-              <span className="font-semibold text-fg-dim">Parent notes: </span>
+              <span className="font-semibold text-fg-dim">
+                {item.submission.reviewer === "ai"
+                  ? "AI notes: "
+                  : "Parent notes: "}
+              </span>
               {item.submission.reviewNotes}
             </p>
           ) : item.submission.status !== "pending" ? (
-            <p className="text-sm text-fg-faint">No notes from parent.</p>
+            <p className="text-sm text-fg-faint">No review notes yet.</p>
           ) : null}
         </article>
       ))}

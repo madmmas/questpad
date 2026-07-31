@@ -10,6 +10,7 @@ export function ReviewQueue({ items }: { items: ReviewQueueItem[] }) {
   const [selectedId, setSelectedId] = useState(items[0]?.submission.id ?? null);
   const [notes, setNotes] = useState("");
   const [reviewing, setReviewing] = useState(false);
+  const [aiReviewing, setAiReviewing] = useState(false);
   const [reviewError, setReviewError] = useState<string | null>(null);
 
   if (queue.length === 0) {
@@ -25,6 +26,15 @@ export function ReviewQueue({ items }: { items: ReviewQueueItem[] }) {
     setSelectedId(id);
     setNotes("");
     setReviewError(null);
+  }
+
+  function removeFromQueue(submissionId: string) {
+    setQueue((prev) => {
+      const next = prev.filter((item) => item.submission.id !== submissionId);
+      setSelectedId(next[0]?.submission.id ?? null);
+      return next;
+    });
+    setNotes("");
   }
 
   async function handleReview(decision: ReviewDecision) {
@@ -45,20 +55,38 @@ export function ReviewQueue({ items }: { items: ReviewQueueItem[] }) {
         throw new Error(payload.error ?? "Failed to review submission");
       }
 
-      setQueue((prev) => {
-        const next = prev.filter(
-          (item) => item.submission.id !== selected.submission.id,
-        );
-        setSelectedId(next[0]?.submission.id ?? null);
-        return next;
-      });
-      setNotes("");
+      removeFromQueue(selected.submission.id);
     } catch (error) {
       setReviewError(
         error instanceof Error ? error.message : "Failed to review submission",
       );
     } finally {
       setReviewing(false);
+    }
+  }
+
+  async function handleAiReview() {
+    setReviewError(null);
+    setAiReviewing(true);
+    try {
+      const response = await fetch(
+        `/api/submissions/${selected.submission.id}/ai-review`,
+        { method: "POST" },
+      );
+      const payload = (await response.json()) as {
+        error?: string;
+        verdict?: { decision: string; notes: string; provider: string };
+      };
+      if (!response.ok) {
+        throw new Error(payload.error ?? "Failed to run AI review");
+      }
+      removeFromQueue(selected.submission.id);
+    } catch (error) {
+      setReviewError(
+        error instanceof Error ? error.message : "Failed to run AI review",
+      );
+    } finally {
+      setAiReviewing(false);
     }
   }
 
@@ -150,11 +178,19 @@ export function ReviewQueue({ items }: { items: ReviewQueueItem[] }) {
         </p>
       ) : null}
 
-      <div className="flex justify-end gap-2">
+      <div className="flex flex-wrap justify-end gap-2">
+        <button
+          type="button"
+          onClick={() => void handleAiReview()}
+          disabled={reviewing || aiReviewing}
+          className="btn-secondary"
+        >
+          {aiReviewing ? "AI reviewing…" : "Ask AI to review"}
+        </button>
         <button
           type="button"
           onClick={() => handleReview("rejected")}
-          disabled={reviewing}
+          disabled={reviewing || aiReviewing}
           className="btn-danger"
         >
           Needs revision
@@ -162,7 +198,7 @@ export function ReviewQueue({ items }: { items: ReviewQueueItem[] }) {
         <button
           type="button"
           onClick={() => handleReview("verified")}
-          disabled={reviewing}
+          disabled={reviewing || aiReviewing}
           className="btn-primary"
         >
           {reviewing ? "Saving…" : "Verify quest"}

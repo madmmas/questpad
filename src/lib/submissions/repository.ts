@@ -17,11 +17,10 @@ export type SubmissionRecord = {
   reviewedAt: Date | null;
 };
 
-export async function listSubmissions(): Promise<SubmissionRecord[]> {
-  const db = getDb();
-  const rows = await db.select().from(submissions);
-
-  return rows.map((row) => ({
+function mapSubmissionRow(
+  row: typeof submissions.$inferSelect,
+): SubmissionRecord {
+  return {
     id: row.id,
     problemId: row.problemId,
     childId: row.childId,
@@ -31,7 +30,26 @@ export async function listSubmissions(): Promise<SubmissionRecord[]> {
     reviewNotes: row.reviewNotes,
     submittedAt: row.submittedAt,
     reviewedAt: row.reviewedAt,
-  }));
+  };
+}
+
+export async function listSubmissions(): Promise<SubmissionRecord[]> {
+  const db = getDb();
+  const rows = await db.select().from(submissions);
+  return rows.map(mapSubmissionRow);
+}
+
+export async function getSubmissionById(
+  id: string,
+): Promise<SubmissionRecord | null> {
+  const db = getDb();
+  const rows = await db
+    .select()
+    .from(submissions)
+    .where(eq(submissions.id, id))
+    .limit(1);
+  const row = rows[0];
+  return row ? mapSubmissionRow(row) : null;
 }
 
 export async function insertSubmission(input: {

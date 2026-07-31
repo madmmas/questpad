@@ -6,14 +6,20 @@ issue.
 
 ## Active
 
-### #34 — Seed demo data for local/Compose demos
+### #7 — AI review integration (Claude API)
 
 - **Status:** in progress (PR)
+- **Branch:** `feat/issue-7-ai-review`
+- **Notes:** Configurable `local` / `claude` providers via
+  `AI_REVIEW_PROVIDER` + `ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL`. Parent
+  review queue has “Ask AI to review”; optional auto-run on submit
+  (`AI_REVIEW_ON_SUBMIT=1`). AI writes `reviewer=ai` verdicts; parent
+  still reviews remaining pending items.
+
+### #34 — Seed demo data for local/Compose demos
+
+- **Status:** done (merged)
 - **Branch:** `feat/issue-34-demo-seed`
-- **Notes:** Opt-in `make demo-seed` / `npm run db:seed` loads
-  `public/mock-data/` (books, problems, submissions + placeholder SVGs)
-  into local Postgres. Guarded by `ALLOW_DEMO_SEED=1`; skipped on
-  `make up`. Compose profile `demo` also available.
 
 ### #32 — Fake login + role-separated UI (parent vs child)
 

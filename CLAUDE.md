@@ -86,9 +86,10 @@ decision on modeling multiple kids). Local stack: `make up` (see Makefile).
 **Auth**: `next-auth` is a dependency but no auth code exists yet in
 `src/` — there's no session/middleware wiring to reason about currently.
 
-**AI review / notifications**: `src/lib/ai` (Claude API) and
-`src/lib/telegram` (Telegram Bot API for parent notifications) are
-unimplemented stubs per the PRD, not yet wired to any route.
+**AI review / notifications**: `src/lib/ai` supports configurable
+`local` and `claude` providers (`AI_REVIEW_PROVIDER`, secrets via
+`ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL`). `src/lib/telegram` (Telegram Bot
+API for parent notifications) is still an unimplemented stub per the PRD.
 
 ## Structure
 
@@ -100,7 +101,7 @@ unimplemented stubs per the PRD, not yet wired to any route.
 - `src/lib/problems` — tagging validation, create-problem use case, DB repository
 - `src/lib/storage` — Blob/local-disk image storage
 - `src/lib/db` — Drizzle schema and client
-- `src/lib/ai` — Claude API review integration (not yet built)
+- `src/lib/ai` — AI review providers (`local` + Claude) and orchestration
 - `src/lib/telegram` — notification helper (not yet built)
 - `drizzle/` — generated SQL migrations, do not hand-edit
 - `public/mock-data` — placeholder problems/submissions for local dev and demos

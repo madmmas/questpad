@@ -17,6 +17,13 @@ function isParentWrite(request: NextRequest): boolean {
   if (pathname.startsWith("/api/submissions/") && method === "PATCH") {
     return true;
   }
+  if (
+    pathname.startsWith("/api/submissions/") &&
+    pathname.endsWith("/ai-review") &&
+    method === "POST"
+  ) {
+    return true;
+  }
   return false;
 }
 
