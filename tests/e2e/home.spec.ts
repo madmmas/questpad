@@ -18,6 +18,10 @@ async function login(
   ).toBeVisible();
 }
 
+function nav(page: import("@playwright/test").Page) {
+  return page.getByRole("navigation");
+}
+
 test("unauthenticated visitors are sent to login", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/login/);
@@ -26,16 +30,26 @@ test("unauthenticated visitors are sent to login", async ({ page }) => {
 
 test("parent login shows parent navigation", async ({ page }) => {
   await login(page, "parent");
-  await expect(page.getByRole("link", { name: "Submit Review" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Add Quest" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Start Quest" })).toHaveCount(0);
+  await expect(
+    nav(page).getByRole("link", { name: "Submit Review", exact: true }),
+  ).toBeVisible();
+  await expect(
+    nav(page).getByRole("link", { name: "Add Quest", exact: true }),
+  ).toBeVisible();
+  await expect(
+    nav(page).getByRole("link", { name: "Start Quest", exact: true }),
+  ).toHaveCount(0);
 });
 
 test("child login shows child navigation", async ({ page }) => {
   await login(page, "child");
-  await expect(page.getByRole("link", { name: "Start Quest" })).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Review" }).first(),
+    nav(page).getByRole("link", { name: "Start Quest", exact: true }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Add Quest" })).toHaveCount(0);
+  await expect(
+    nav(page).getByRole("link", { name: "Review", exact: true }),
+  ).toBeVisible();
+  await expect(
+    nav(page).getByRole("link", { name: "Add Quest", exact: true }),
+  ).toHaveCount(0);
 });
