@@ -52,6 +52,17 @@ Then use the role-specific tabs (parent: Dashboard / Quest Board / Submit
 Review / Add Quest; child: Dashboard / Quest Board / Start Quest /
 Scratchpad / Review).
 
+Seed synthetic demo quests/submissions (opt-in — not part of `make up`):
+
+```bash
+make demo-seed    # truncate + load public/mock-data into Compose Postgres
+make demo-reset   # same wipe + reseed
+```
+
+Or: `ALLOW_DEMO_SEED=1 DATABASE_URL=… DATABASE_DRIVER=postgres npm run db:seed`.
+After seeding, parent Submit Review shows pending items and the quest board /
+dashboard are non-empty for both roles.
+
 `make help` lists all targets. Postgres data and local uploads live in Docker
 volumes (`make clean` deletes them).
 

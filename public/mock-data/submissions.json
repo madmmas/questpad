@@ -1,4 +1,79 @@
 [
-  { "id": "s1", "problem_id": "p1", "child_id": "child-1", "status": "verified", "reviewer": "parent", "submitted_at": "2026-07-24T16:40:00Z" },
-  { "id": "s2", "problem_id": "p2", "child_id": "child-1", "status": "verified", "reviewer": "ai", "submitted_at": "2026-07-25T11:02:00Z" }
+  {
+    "id": "30000000-0000-4000-8000-000000000001",
+    "problemId": "20000000-0000-4000-8000-000000000001",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-addition.svg",
+    "status": "verified",
+    "reviewer": "parent",
+    "reviewNotes": "Nice work — all sums look correct!",
+    "submittedAt": "2026-07-24T16:40:00.000Z",
+    "reviewedAt": "2026-07-24T18:05:00.000Z"
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000002",
+    "problemId": "20000000-0000-4000-8000-000000000006",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-owl-story.svg",
+    "status": "verified",
+    "reviewer": "ai",
+    "reviewNotes": "Answers match the story details.",
+    "submittedAt": "2026-07-25T11:02:00.000Z",
+    "reviewedAt": "2026-07-25T11:10:00.000Z"
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000003",
+    "problemId": "20000000-0000-4000-8000-000000000004",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-plants.svg",
+    "status": "verified",
+    "reviewer": "parent",
+    "reviewNotes": "Great diagram of the life cycle.",
+    "submittedAt": "2026-07-26T15:20:00.000Z",
+    "reviewedAt": "2026-07-26T19:00:00.000Z"
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000004",
+    "problemId": "20000000-0000-4000-8000-000000000003",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-multiplication.svg",
+    "status": "rejected",
+    "reviewer": "parent",
+    "reviewNotes": "Check problem 3 — try the lattice method again.",
+    "submittedAt": "2026-07-27T14:10:00.000Z",
+    "reviewedAt": "2026-07-27T17:30:00.000Z"
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000005",
+    "problemId": "20000000-0000-4000-8000-000000000005",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-weather.svg",
+    "status": "pending",
+    "reviewer": null,
+    "reviewNotes": null,
+    "submittedAt": "2026-07-28T12:45:00.000Z",
+    "reviewedAt": null
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000006",
+    "problemId": "20000000-0000-4000-8000-000000000002",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-fractions.svg",
+    "status": "pending",
+    "reviewer": null,
+    "reviewNotes": null,
+    "submittedAt": "2026-07-29T09:15:00.000Z",
+    "reviewedAt": null
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000007",
+    "problemId": "20000000-0000-4000-8000-000000000007",
+    "childId": "00000000-0000-4000-8000-000000000001",
+    "workImageUrl": "/mock-data/images/work-vocabulary.svg",
+    "status": "verified",
+    "reviewer": "parent",
+    "reviewNotes": "All definitions look solid.",
+    "submittedAt": "2026-07-30T10:00:00.000Z",
+    "reviewedAt": "2026-07-30T11:20:00.000Z"
+  }
 ]

@@ -6,14 +6,19 @@ issue.
 
 ## Active
 
-### #32 — Fake login + role-separated UI (parent vs child)
+### #34 — Seed demo data for local/Compose demos
 
 - **Status:** in progress (PR)
+- **Branch:** `feat/issue-34-demo-seed`
+- **Notes:** Opt-in `make demo-seed` / `npm run db:seed` loads
+  `public/mock-data/` (books, problems, submissions + placeholder SVGs)
+  into local Postgres. Guarded by `ALLOW_DEMO_SEED=1`; skipped on
+  `make up`. Compose profile `demo` also available.
+
+### #32 — Fake login + role-separated UI (parent vs child)
+
+- **Status:** done (merged)
 - **Branch:** `feat/issue-32-fake-login-roles`
-- **Notes:** Demo cookie session (`/login` with username/role/password),
-  role-specific `AppShell` tabs, `src/proxy.ts` route gates, child review
-  feed at `/child/review`. Related older auth issues (#26–#29) remain open
-  for a later real PIN flow.
 
 ### #25 — Apply QuestPad mockup theme
 

@@ -1,5 +1,58 @@
 [
-  { "id": "p1", "title": "Addition Practice", "book": "Math Workbook", "location": "Page 12", "difficulty": "bronze", "xp": 10 },
-  { "id": "p2", "title": "Owl Story", "book": "Reading Comprehension", "location": "Ch. 3", "difficulty": "silver", "xp": 25 },
-  { "id": "p3", "title": "Fraction Word Problems", "book": "Math Workbook", "location": "Ch. 4", "difficulty": "gold", "xp": 50 }
+  {
+    "id": "20000000-0000-4000-8000-000000000001",
+    "bookId": "10000000-0000-4000-8000-000000000001",
+    "imageUrl": "/mock-data/images/quest-addition.svg",
+    "difficulty": "bronze",
+    "tags": "addition,practice",
+    "createdAt": "2026-07-20T10:00:00.000Z"
+  },
+  {
+    "id": "20000000-0000-4000-8000-000000000002",
+    "bookId": "10000000-0000-4000-8000-000000000001",
+    "imageUrl": "/mock-data/images/quest-fractions.svg",
+    "difficulty": "gold",
+    "tags": "fractions,word-problems",
+    "createdAt": "2026-07-21T10:00:00.000Z"
+  },
+  {
+    "id": "20000000-0000-4000-8000-000000000003",
+    "bookId": "10000000-0000-4000-8000-000000000001",
+    "imageUrl": "/mock-data/images/quest-multiplication.svg",
+    "difficulty": "silver",
+    "tags": "multiplication",
+    "createdAt": "2026-07-22T10:00:00.000Z"
+  },
+  {
+    "id": "20000000-0000-4000-8000-000000000004",
+    "bookId": "10000000-0000-4000-8000-000000000002",
+    "imageUrl": "/mock-data/images/quest-plants.svg",
+    "difficulty": "bronze",
+    "tags": "plants,life-cycles",
+    "createdAt": "2026-07-23T10:00:00.000Z"
+  },
+  {
+    "id": "20000000-0000-4000-8000-000000000005",
+    "bookId": "10000000-0000-4000-8000-000000000002",
+    "imageUrl": "/mock-data/images/quest-weather.svg",
+    "difficulty": "silver",
+    "tags": "weather",
+    "createdAt": "2026-07-24T10:00:00.000Z"
+  },
+  {
+    "id": "20000000-0000-4000-8000-000000000006",
+    "bookId": "10000000-0000-4000-8000-000000000003",
+    "imageUrl": "/mock-data/images/quest-owl-story.svg",
+    "difficulty": "silver",
+    "tags": "comprehension,story",
+    "createdAt": "2026-07-25T10:00:00.000Z"
+  },
+  {
+    "id": "20000000-0000-4000-8000-000000000007",
+    "bookId": "10000000-0000-4000-8000-000000000003",
+    "imageUrl": "/mock-data/images/quest-vocabulary.svg",
+    "difficulty": "bronze",
+    "tags": "vocabulary",
+    "createdAt": "2026-07-26T10:00:00.000Z"
+  }
 ]
