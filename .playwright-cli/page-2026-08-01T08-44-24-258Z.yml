@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: QuestPad
+      - heading "Sign in" [level=1] [ref=e6]
+      - paragraph [ref=e7]: Sign in with a demo account. Your role (parent or child) comes from those credentials.
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: Username
+        - textbox "Username" [ref=e11]
+      - generic [ref=e12]:
+        - generic [ref=e13]: Password
+        - textbox "Password" [ref=e14]
+      - button "Sign in" [ref=e15] [cursor=pointer]
+      - paragraph [ref=e16]:
+        - text: "Demo accounts:"
+        - code [ref=e17]: parent
+        - text: /
+        - code [ref=e18]: parent123
+        - text: (parent) or
+        - code [ref=e19]: child
+        - text: /
+        - code [ref=e20]: child123
+        - text: (child). Role is taken from the account, not chosen here.
+  - button "Open Next.js Dev Tools" [ref=e26] [cursor=pointer]
