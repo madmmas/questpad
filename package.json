@@ -29,11 +29,11 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.115.0",
+    "@anthropic-ai/sdk": "^0.116.0",
     "@neondatabase/serverless": "^1.1.0",
-    "@vercel/blob": "^2.6.1",
+    "@vercel/blob": "^2.7.0",
     "drizzle-orm": "^0.45.2",
-    "next": "16.2.12",
+    "next": "16.3.0",
     "next-auth": "^4.24.15",
     "perfect-freehand": "^1.2.3",
     "postgres": "^3.4.9",
